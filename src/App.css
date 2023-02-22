@@ -1,0 +1,42 @@
+.App {
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+html {
+  font-family: "Urbanist", sans-serif;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5rem;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
+button,
+input,
+select {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
