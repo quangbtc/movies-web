@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { Fragment, useState } from "react";
+import styled, { keyframes } from "styled-components";
 import TippyHeadless from "@tippyjs/react/headless";
 import { Link } from "react-router-dom";
 import {
   AddCircle,
   ArrowDropDown,
+  Close,
   Notifications,
   Search,
 } from "@mui/icons-material";
@@ -16,6 +17,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import LangSearch from "./LangSearch";
+import SearchApi from "../../api/searchApi";
+import SearchComponent from "./SearchComponent"
 
 const Container = styled.div`
   background-color: #374f66;
@@ -27,6 +30,10 @@ const Container = styled.div`
   justify-content: space-between;
 
   padding: 10px 50px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 0;
 `;
 const Left = styled.div`
   flex: 1;
@@ -130,11 +137,31 @@ const Select = styled.div`
 `;
 const Option = styled.span``;
 const ProfileContainer = styled.div`
+  background-color: white;
   color: #333;
   min-width: 200px;
-  border: 1px solid #333;
+  border: 1px solid #e3e3e3;
   border-radius: 5px;
   z-index: 100;
+`;
+const SlideDown = keyframes`
+    from {
+   opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const SearchContainer = styled.div`
+
+  display: ${(props) => (props.show === true ? "block" : "none")};
+  background-color: white;
+  animation: ${SlideDown} 0.3s linear;
+  position: fixed;
+  left: 0;
+  right: 0;
 `;
 
 //============END SCSS======
@@ -246,126 +273,153 @@ const PROFILE_SETTING = [
 ];
 const Header = () => {
   const [showLanguage, setShowLanguage] = useState(false);
-
+  const [showSearch, setShowSearch] = useState(false);
+  const API_KEY = "f1e855a6d7007045924d68cb30ed82ae";
+  // const handleOnclick = async () => {
+  //   const params = {
+  //     query: "Avatar",
+  //     language: "en-US",
+  //     api_key: API_KEY,
+  //   };
+  //   try {
+  //     const response = await SearchApi.searchMovie(params);
+  //     console.log("check api", response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
-    <Container>
-      <Left>
-        <Logo>
-          <h1>MOVIES</h1>
-          <div></div>
-        </Logo>
-        <Menu>
-          {MENU.map((e, i) => {
-            return (
-              <>
-                <TippyHeadless
-                  interactive={true}
-                  render={(attrs) =>
-                    e.children &&
-                    e.children.length > 0 && (
-                      <TippyContainer tabIndex="-1" {...attrs}>
-                        {e.children &&
-                          e.children.length > 0 &&
-                          e.children.map((item, index) => {
-                            return (
-                              <TippyItem key={index}>
-                                <Link to={item.path}>{item.name}</Link>
-                              </TippyItem>
-                            );
-                          })}
-                      </TippyContainer>
-                    )
-                  }
-                >
-                  <Item key={i}>{e.name}</Item>
-                </TippyHeadless>
-              </>
-            );
-          })}
-        </Menu>
-      </Left>
-      <Right>
-        <TippyHeadless
-          interactive={true}
-          trigger="click"
-          render={(attrs) => (
-            <TippyContainer tabIndex="-1" {...attrs}>
-              <TippyItem>
-                <Link>Add new movie</Link>
-              </TippyItem>
-              <TippyItem>
-                <Link>Add new tv show</Link>
-              </TippyItem>
-            </TippyContainer>
-          )}
-        >
-          <IconContainer>
-            <AddCircle />
-          </IconContainer>
-        </TippyHeadless>
-        <TippyHeadless
-          interactive={true}
-          trigger="click"
-          render={(attrs) => (
-            <TippyContainer tabIndex="-1" {...attrs}>
-              <Head>
-                <h4>Languages Preferences</h4>
-              </Head>
-              <Content>
-                <InputGroup>
-                  <Label>
-                    <span>Defaul language</span>
-                    <span>Reset</span>
-                  </Label>
-                  <Select onClick={() => setShowLanguage(!showLanguage)}>
-                    <Option>English (US)</Option>
-                    <ArrowDropDown />
-                  </Select>
-                </InputGroup>
-                {showLanguage && <LangSearch />}
-              </Content>
-            </TippyContainer>
-          )}
-        >
-          <IconContainer>
-            <Text>EN</Text>
-          </IconContainer>
-        </TippyHeadless>
+    <Fragment>
+      <Container>
+        <Left>
+          <Logo>
+            <h1>MOVIES</h1>
+            <div></div>
+          </Logo>
+          <Menu>
+            {MENU.map((e, i) => {
+              return (
+                <>
+                  <TippyHeadless
+                    interactive={true}
+                    render={(attrs) =>
+                      e.children &&
+                      e.children.length > 0 && (
+                        <TippyContainer tabIndex="-1" {...attrs}>
+                          {e.children &&
+                            e.children.length > 0 &&
+                            e.children.map((item, index) => {
+                              return (
+                                <TippyItem key={index}>
+                                  <Link to={item.path}>{item.name}</Link>
+                                </TippyItem>
+                              );
+                            })}
+                        </TippyContainer>
+                      )
+                    }
+                  >
+                    <Item key={i}>{e.name}</Item>
+                  </TippyHeadless>
+                </>
+              );
+            })}
+          </Menu>
+        </Left>
+        <Right>
+          <TippyHeadless
+            interactive={true}
+            trigger="click"
+            render={(attrs) => (
+              <TippyContainer tabIndex="-1" {...attrs}>
+                <TippyItem>
+                  <Link>Add new movie</Link>
+                </TippyItem>
+                <TippyItem>
+                  <Link>Add new tv show</Link>
+                </TippyItem>
+              </TippyContainer>
+            )}
+          >
+            <IconContainer>
+              <AddCircle />
+            </IconContainer>
+          </TippyHeadless>
+          <TippyHeadless
+            interactive={true}
+            trigger="click"
+            render={(attrs) => (
+              <TippyContainer tabIndex="-1" {...attrs}>
+                <Head>
+                  <h4>Languages Preferences</h4>
+                </Head>
+                <Content>
+                  <InputGroup>
+                    <Label>
+                      <span>Defaul language</span>
+                      <span>Reset</span>
+                    </Label>
+                    <Select onClick={() => setShowLanguage(!showLanguage)}>
+                      <Option>English (US)</Option>
+                      <ArrowDropDown />
+                    </Select>
+                  </InputGroup>
+                  {showLanguage && <LangSearch />}
+                </Content>
+              </TippyContainer>
+            )}
+          >
+            <IconContainer>
+              <Text>EN</Text>
+            </IconContainer>
+          </TippyHeadless>
 
-        <IconContainer>
-          <Notifications />
-        </IconContainer>
-        <TippyHeadless
-          interactive={true}
-          trigger="click"
-          render={(attrs) => (
-            <ProfileContainer tabIndex={-1} {...attrs}>
-              <Box>
-                {PROFILE_SETTING.map((item, index) => (
-                  <>
-                    <ListItemButton key={index} component="a" href={item.path}>
-                      <ListItemText
-                        primary={item.name}
-                        secondary={item.desc ? item.desc : ""}
-                      />
-                    </ListItemButton>
-                    {item.divide && <Divider />}
-                  </>
-                ))}
-              </Box>
-            </ProfileContainer>
-          )}
-        >
           <IconContainer>
-            <Avatar sx={{ backgroundColor: "orange" }}>Q</Avatar>
+            <Notifications />
           </IconContainer>
-        </TippyHeadless>
+          <TippyHeadless
+            interactive={true}
+            trigger="click"
+            render={(attrs) => (
+              <ProfileContainer tabIndex={-1} {...attrs}>
+                <Box>
+                  {PROFILE_SETTING.map((item, index) => (
+                    <>
+                      <ListItemButton
+                        key={index}
+                        component="a"
+                        href={item.path}
+                      >
+                        <ListItemText
+                          primary={item.name}
+                          secondary={item.desc ? item.desc : ""}
+                        />
+                      </ListItemButton>
+                      {item.divide && <Divider />}
+                    </>
+                  ))}
+                </Box>
+              </ProfileContainer>
+            )}
+          >
+            <IconContainer>
+              <Avatar sx={{ backgroundColor: "orange" }}>Q</Avatar>
+            </IconContainer>
+          </TippyHeadless>
 
-        <IconContainer>
-          <Search sx={{ color: "blue" }} />
-        </IconContainer>
-      </Right>
-    </Container>
+          <IconContainer onClick={() => setShowSearch(!showSearch)}>
+            {showSearch === true ? (
+              <Close />
+            ) : (
+              <Search sx={{ color: "blue" }} />
+            )}
+          </IconContainer>
+        </Right>
+      </Container>
+      <SearchContainer show={showSearch}>
+        <SearchComponent/>
+      </SearchContainer>
+    </Fragment>
   );
 };
 
