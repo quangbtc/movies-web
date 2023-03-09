@@ -19,13 +19,17 @@ const Header = styled.div`
     color: black;
   }
 `;
-const ListMovie = styled.div`
+const MovieContainer = styled.div`
+  padding-bottom: 20px;
+  width: 100%;
   margin: 10px auto;
+  overflow-x: scroll;
+`;
+const ListMovie = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 10px;
-  align-items: flex-start;
-  align-content: flex-start;
+  align-items: center;
 `;
 
 const Trending = () => {
@@ -75,15 +79,24 @@ const Trending = () => {
     <Container>
       <Header>
         <h3>Trending</h3>
-        <Switch left="Day" right="This week" onClick={handleOnClick} />
+        <Switch
+          left="Day"
+          right="This week"
+          onClick={handleOnClick}
+          bgColor="#062542"
+          color="black"
+          activeColor="#9ff7c8"
+        />
       </Header>
-      <ListMovie>
-        {listMovie &&
-          listMovie.length > 0 &&
-          listMovie.splice(0, 8).map((item) => {
-            return <MovieItem item={item} key={item.id} />;
-          })}
-      </ListMovie>
+      <MovieContainer>
+        <ListMovie>
+          {listMovie &&
+            listMovie.length > 0 &&
+            listMovie.map((item) => {
+              return <MovieItem item={item} key={item.id} />;
+            })}
+        </ListMovie>
+      </MovieContainer>
     </Container>
   );
 };

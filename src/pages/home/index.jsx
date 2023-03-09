@@ -4,6 +4,7 @@ import Footer from "../../components/footer/Footer";
 import styled from "styled-components";
 import Banner from "../../components/banner/Banner";
 import Trending from "../../components/trending/Trending";
+import Trailer from "../../components/trailer";
 
 const Container = styled.div``;
 const index = () => {
@@ -13,6 +14,7 @@ const index = () => {
       <Container>
         <Banner />
         <Trending />
+        <Trailer />
       </Container>
       <Footer />
     </>
