@@ -18,14 +18,23 @@ import {
 } from "@mui/material";
 import LangSearch from "./LangSearch";
 import SearchApi from "../../api/searchApi";
-import SearchComponent from "./SearchComponent"
+import SearchComponent from "./SearchComponent";
+
+const FadeIn = keyframes`
+    from {   
+    opacity: 0;
+  }
+  to { 
+    opacity: 1;
+  }
+`;
 
 const Container = styled.div`
   background-color: #374f66;
   height: 64px;
   color: white;
 
-  display: flex;
+  display: ${(props) => (props.show === true ? "flex" : "none")};
   align-items: center;
   justify-content: space-between;
 
@@ -34,6 +43,9 @@ const Container = styled.div`
   right: 0;
   top: 0;
   left: 0;
+  z-index: 1000;
+  animation: ${FadeIn} 0.5s ease-in-out;
+  transition: all 0.3s;
 `;
 const Left = styled.div`
   flex: 1;
@@ -155,13 +167,14 @@ const SlideDown = keyframes`
 `;
 
 const SearchContainer = styled.div`
-
   display: ${(props) => (props.show === true ? "block" : "none")};
   background-color: white;
   animation: ${SlideDown} 0.3s linear;
   position: fixed;
+  top: 64px;
   left: 0;
   right: 0;
+  z-index: 1000;
 `;
 
 //============END SCSS======
@@ -271,7 +284,7 @@ const PROFILE_SETTING = [
     divide: false,
   },
 ];
-const Header = () => {
+const Header = ({ show }) => {
   const [showLanguage, setShowLanguage] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const API_KEY = "f1e855a6d7007045924d68cb30ed82ae";
@@ -290,7 +303,7 @@ const Header = () => {
   // };
   return (
     <Fragment>
-      <Container>
+      <Container show={show}>
         <Left>
           <Logo>
             <h1>MOVIES</h1>
@@ -417,7 +430,7 @@ const Header = () => {
         </Right>
       </Container>
       <SearchContainer show={showSearch}>
-        <SearchComponent/>
+        <SearchComponent />
       </SearchContainer>
     </Fragment>
   );

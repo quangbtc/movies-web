@@ -8,6 +8,7 @@ import useDebounce from "../../hooks/useDebounce";
 const Container = styled.div`
   padding: 5px 50px;
   border-bottom: 1px solid #e3e3e3;
+  z-index: 100;
 `;
 const SearchContainer = styled.div`
   display: flex;
@@ -36,11 +37,16 @@ const InputContainer = styled.div`
   margin-left: 10px;
 `;
 
-const ResultContainer = styled.div``;
+const ResultContainer = styled.div`
+  background-color: white;
+  max-height: 250px;
+  overflow: scroll;
+`;
 const Header = styled.div`
   padding: 10px 50px;
   text-align: left;
   border-bottom: 1px solid #e3e3e3;
+  z-index: 1000;
 `;
 
 const Title = styled.h3`
@@ -117,6 +123,10 @@ const SearchComponent = () => {
                   sx={{
                     borderBottom: "1px solid #e3e3e3",
                     paddingLeft: "50px",
+                    "&:hover": {
+                      backgroundColor: "#e3e3e3",
+                    },
+                    cursor: "pointer",
                   }}
                   key={item.id}
                 >

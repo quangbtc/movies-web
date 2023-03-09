@@ -8,5 +8,9 @@ const TvApi = {
     let url = "/tv/airing_today";
     return axiosClient.get(url, { params });
   },
+  getPopular: (params) => {
+    let url = "/tv/popular";
+    return axiosClient.get(url, { params });
+  },
 };
 export default TvApi;

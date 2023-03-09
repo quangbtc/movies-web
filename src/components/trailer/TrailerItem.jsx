@@ -57,12 +57,21 @@ const Title = styled.h4`
   font-size: 20px;
   color: white;
   font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    color: #64dfb3;
+  }
 `;
 const Description = styled.div`
   text-align: center;
   font-size: 14px;
   color: white;
   font-weight: 600;
+  padding: 5px 10px;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 const MenuContainer = styled.div`
   background-color: white;
@@ -106,8 +115,8 @@ const TrailerItem = ({ item }) => {
           <PlayArrow sx={{ fontSize: "60px" }} />
         </PlayIcon>
       </ImgContainer>
-      <Title>{item.title}</Title>
-      <Description>Mo ta nange</Description>
+      <Title>{item.title ? item.title : item.original_name}</Title>
+      <Description>{item.overview}</Description>
     </Container>
   );
 };

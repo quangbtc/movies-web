@@ -34,6 +34,7 @@ const Content = styled.div`
 `;
 const SearchContainer = styled.div`
   padding: 20px 50px;
+  z-index: 10;
 `;
 const Search = styled.div`
   display: flex;
@@ -61,6 +62,7 @@ const Button = styled.button`
   &:hover {
     opacity: 1;
   }
+  z-index: 10;
 `;
 const Banner = () => {
   return (
