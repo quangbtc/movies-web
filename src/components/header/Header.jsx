@@ -19,16 +19,17 @@ import {
 import LangSearch from "./LangSearch";
 import SearchApi from "../../api/searchApi";
 import SearchComponent from "./SearchComponent";
+import configgration from "../../api/configration";
+import { useSelector } from "react-redux";
 
-const FadeIn = keyframes`
-    from {   
+const Fade = keyframes`
+  from{
     opacity: 0;
   }
-  to { 
+  to{
     opacity: 1;
   }
 `;
-
 const Container = styled.div`
   background-color: #374f66;
   height: 64px;
@@ -44,8 +45,7 @@ const Container = styled.div`
   top: 0;
   left: 0;
   z-index: 1000;
-  animation: ${FadeIn} 0.5s ease-in-out;
-  transition: all 0.3s;
+  animation: ${Fade} 0.5s ease-in-out;
 `;
 const Left = styled.div`
   flex: 1;
@@ -81,7 +81,9 @@ const Item = styled.li`
   font-weight: 600;
 `;
 const TippyContainer = styled.div`
+  padding: 10px 5px;
   background-color: lightcyan;
+  width: 300px;
   border-radius: 5px;
   overflow: hidden;
 `;
@@ -111,6 +113,7 @@ const Text = styled.div`
   width: 30px;
   height: 30px;
   font-size: 14px;
+  text-transform: uppercase;
 
   border: 1px solid white;
   border-radius: 5px;
@@ -287,20 +290,23 @@ const PROFILE_SETTING = [
 const Header = ({ show }) => {
   const [showLanguage, setShowLanguage] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const API_KEY = "f1e855a6d7007045924d68cb30ed82ae";
-  // const handleOnclick = async () => {
-  //   const params = {
-  //     query: "Avatar",
-  //     language: "en-US",
-  //     api_key: API_KEY,
-  //   };
-  //   try {
-  //     const response = await SearchApi.searchMovie(params);
-  //     console.log("check api", response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const [languages, setLanguages] = useState([]);
+  const handleShowLanguage = async () => {
+    const params = {
+      api_key: process.env.REACT_APP_API_KEY,
+    };
+    try {
+      const response = await configgration.getLanguages(params);
+      if (response) {
+        setLanguages(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setShowLanguage(!showLanguage);
+  };
+  const language = useSelector((state) => state.language.language);
+  console.log("check", language);
   return (
     <Fragment>
       <Container show={show}>
@@ -361,6 +367,7 @@ const Header = ({ show }) => {
           <TippyHeadless
             interactive={true}
             trigger="click"
+            placement="bottom"
             render={(attrs) => (
               <TippyContainer tabIndex="-1" {...attrs}>
                 <Head>
@@ -372,18 +379,20 @@ const Header = ({ show }) => {
                       <span>Defaul language</span>
                       <span>Reset</span>
                     </Label>
-                    <Select onClick={() => setShowLanguage(!showLanguage)}>
-                      <Option>English (US)</Option>
+                    <Select onClick={() => handleShowLanguage()}>
+                      <Option>
+                        {language.country} + {language.language}
+                      </Option>
                       <ArrowDropDown />
                     </Select>
                   </InputGroup>
-                  {showLanguage && <LangSearch />}
+                  {showLanguage && <LangSearch languages={languages} />}
                 </Content>
               </TippyContainer>
             )}
           >
-            <IconContainer>
-              <Text>EN</Text>
+            <IconContainer onClick={() => setShowLanguage(false)}>
+              <Text>{language.language}</Text>
             </IconContainer>
           </TippyHeadless>
 
