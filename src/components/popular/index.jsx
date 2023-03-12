@@ -52,10 +52,10 @@ const Popular = () => {
         };
         let response;
         if (type === "tv") {
-          response = await TvApi.getPopular(params);
+          response = await TvApi.getMoviesTv('popular',params);
         }
         if (type === "movie") {
-          response = await MoviesApi.getPopular(params);
+          response = await MoviesApi.getMoives('popular',params);
         }
         if (response) {
           setListMovie(response.results);

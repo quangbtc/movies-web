@@ -1,23 +1,15 @@
 import axiosClient from "./configApi";
+
+export const TypeMovies = {
+  upComing: "upcoming",
+  top_rated: "top_rated",
+  popular: "popular",
+  now_playing: "now_playing",
+  latest: "latest",
+};
 const MoviesApi = {
-  getUpcomming: (params) => {
-    const url = "/movie/upcoming";
-    return axiosClient.get(url, { params });
-  },
-  getTopRate: (params) => {
-    const url = "/movie/top_rated";
-    return axiosClient.get(url, { params });
-  },
-  getPopular: (params) => {
-    const url = "/movie/popular";
-    return axiosClient.get(url, { params });
-  },
-  getNowPlaying: (params) => {
-    const url = "/movie/now_playing";
-    return axiosClient.get(url, { params });
-  },
-  getLatest: (params) => {
-    const url = "/movie/latest";
+  getMoives: (typeMoive, params) => {
+    const url = `/movie/${typeMoive}`;
     return axiosClient.get(url, { params });
   },
 };

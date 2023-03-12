@@ -41,3 +41,8 @@ select {
     transform: rotate(360deg);
   }
 }
+
+.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+  height: 28px !important;
+  margin: 0px 10px !important;
+}

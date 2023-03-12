@@ -37,6 +37,7 @@ const PopperContainer = styled.div`
   padding: 10px 0px;
   width: inherit;
   border-radius: 5px;
+  border: 1px solid #e3e3e3;
   background-color: white;
   position: absolute;
   left: 0;

@@ -17,10 +17,11 @@ import {
   ListItemText,
 } from "@mui/material";
 import LangSearch from "./LangSearch";
-import SearchApi from "../../api/searchApi";
 import SearchComponent from "./SearchComponent";
 import configgration from "../../api/configration";
 import { useSelector } from "react-redux";
+import { TypeMovies } from "../../api/moviesApi";
+import { TypeTv } from "../../api/tvApi";
 
 const Fade = keyframes`
   from{
@@ -184,44 +185,43 @@ const SearchContainer = styled.div`
 const MENU = [
   {
     name: "Movies",
-    path: "/movie",
     children: [
-      { name: "Popular", path: "/" },
+      { name: "Popular", path: `/movie/${TypeMovies.popular}` },
       {
         name: "Now playing",
-        path: "/now-playing",
+        path: `/movie/${TypeMovies.now_playing}`,
       },
       {
         name: "Up comming",
-        path: "/up-comming",
+        path: `/movie/${TypeMovies.upComing}`,
       },
       {
         name: "Top rate",
-        path: "/top-rate",
+        path: `/movie/${TypeMovies.top_rated}`,
       },
     ],
   },
   {
     name: "TV show",
     children: [
-      { name: "Popular", path: "/" },
+      { name: "Popular", path: `/tv/${TypeTv.popular}` },
       {
         name: "Airing Today",
-        path: "/airing-today",
+        path: `/tv/${TypeTv.airing_today}`,
       },
       {
         name: "On TV",
-        path: "/on-tv",
+        path: `/tv/${TypeTv.onTheAir}`,
       },
       {
         name: "Top Rated",
-        path: "/top-rated",
+        path: `/tv/${TypeTv.top_rated}`,
       },
     ],
   },
   {
     name: "People",
-    children: [{ name: "Popular People", path: "/movie" }],
+    children: [{ name: "Popular People", path: "/people" }],
   },
   {
     name: "More",
@@ -312,7 +312,10 @@ const Header = ({ show }) => {
       <Container show={show}>
         <Left>
           <Logo>
-            <h1>MOVIES</h1>
+            <Link to="/">
+              <h1>MOVIES</h1>
+            </Link>
+
             <div></div>
           </Logo>
           <Menu>
@@ -321,6 +324,7 @@ const Header = ({ show }) => {
                 <>
                   <TippyHeadless
                     interactive={true}
+                    placement="bottom"
                     render={(attrs) =>
                       e.children &&
                       e.children.length > 0 && (

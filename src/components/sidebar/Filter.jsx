@@ -5,11 +5,10 @@ import {
   AccordionDetails,
   AccordionSummary,
   Divider,
-  TextField,
+  Toolbar,
 } from "@mui/material";
 import styled from "styled-components";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { height } from "@mui/system";
 
 //===========SCSS============
 const FilterContainer = styled.div`
@@ -23,7 +22,7 @@ const Title = styled.h4`
   margin-bottom: 5px;
 `;
 const Text = styled.p`
-  width: 20px;
+  width: 27px;
   font-size: 13px;
   font-weight: 400;
 `;
@@ -48,7 +47,7 @@ const DateGroup = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const DatePickerContainer = styled.div`
+const DatePickerContain = styled.div`
   width: 150px;
   height: 30px;
 `;
@@ -131,7 +130,9 @@ const Filter = () => {
             </DateGroup>
             <DateGroup>
               <Text>To</Text>
-              <DatePicker />
+              <DatePickerContain>
+                <DatePicker />
+              </DatePickerContain>
             </DateGroup>
           </ContainerSection>
         </AccordionDetails>

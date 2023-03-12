@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Switch from "../switch";
 import TrailerItem from "./TrailerItem";
 import { IMAGES } from "../../assets/images/images";
-import TvApi from "../../api/tvApi";
-import MoviesApi from "../../api/moviesApi";
+import TvApi,{TypeTv} from "../../api/tvApi";
+import MoviesApi, { TypeMovies } from "../../api/moviesApi";
 
 const Container = styled.div`
   position: relative;
@@ -60,10 +60,10 @@ const Trailer = () => {
           api_key: process.env.REACT_APP_API_KEY,
         };
         if (change === "tv") {
-          response = await TvApi.getTvAiringToday(params);
+          response = await TvApi.getMoviesTv(TypeTv.airing_today,params);
         }
         if (change === "movie") {
-          response = await MoviesApi.getNowPlaying(params);
+          response = await MoviesApi.getMoives(TypeMovies.now_playing, params);
         }
         console.log("check movies", response);
         if (response) {
