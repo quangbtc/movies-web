@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/quangbtc.github.io/movies-web/static/css/main.b5d7fbd2.css",
+    "main.js": "/quangbtc.github.io/movies-web/static/js/main.321d1b96.js",
+    "static/js/787.14e4bc02.chunk.js": "/quangbtc.github.io/movies-web/static/js/787.14e4bc02.chunk.js",
+    "index.html": "/quangbtc.github.io/movies-web/index.html",
+    "main.b5d7fbd2.css.map": "/quangbtc.github.io/movies-web/static/css/main.b5d7fbd2.css.map",
+    "main.321d1b96.js.map": "/quangbtc.github.io/movies-web/static/js/main.321d1b96.js.map",
+    "787.14e4bc02.chunk.js.map": "/quangbtc.github.io/movies-web/static/js/787.14e4bc02.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b5d7fbd2.css",
+    "static/js/main.321d1b96.js"
+  ]
+}
