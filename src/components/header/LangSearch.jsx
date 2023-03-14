@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { SearchOutlined } from "@mui/icons-material";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";

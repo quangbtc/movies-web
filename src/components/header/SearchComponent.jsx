@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { Close, RotateLeft, Search } from "@mui/icons-material";
-import { Divider, List, ListItem } from "@mui/material";
+import { List, ListItem } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 import SearchApi from "../../api/searchApi";
 import VARIABLE from "../../constant";

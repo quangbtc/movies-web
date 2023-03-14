@@ -315,7 +315,6 @@ const Header = ({ show }) => {
             <Link to="/">
               <h1>MOVIES</h1>
             </Link>
-
             <div></div>
           </Logo>
           <Menu>
